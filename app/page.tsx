@@ -41,7 +41,9 @@ export default function Home() {
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-xl bg-white p-4 shadow-sm">
             <p className="text-sm text-gray-500">Total Tasks</p>
-            <h2 className="mt-2 text-2xl font-bold">{totalTasks}</h2>
+            <h2 className="mt-2 text-2xl font-bold text-gray-600">
+              {totalTasks}
+            </h2>
           </div>
 
           <div className="rounded-xl bg-white p-4 shadow-sm">
@@ -64,7 +66,7 @@ export default function Home() {
           <input
             type="text"
             placeholder="Search tasks..."
-            className="w-full rounded-xl border bg-white p-3 outline-none"
+            className="w-full rounded-xl border bg-white p-3 outline-none text-purple-600"
           />
         </div>
 
@@ -74,41 +76,14 @@ export default function Home() {
             All
           </button>
 
-          <button className="rounded-xl bg-white px-4 py-2">Active</button>
+          <button className="rounded-xl bg-white px-4 py-2 text-gray-600">
+            Active
+          </button>
 
-          <button className="rounded-xl bg-white px-4 py-2">Completed</button>
+          <button className="rounded-xl bg-white px-4 py-2 text-gray-600">
+            Completed
+          </button>
         </div>
-
-        {/* Add Task Button */}
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="mb-6 rounded-xl bg-[#4F46E5] px-5 py-3 font-medium text-white"
-        >
-          + Add Task
-        </button>
-        {showForm && (
-          <div className="mb-6 rounded-xl bg-white p-5 shadow-sm">
-            <h2 className="mb-4 text-lg font-semibold text-gray-900">
-              Add New Task
-            </h2>
-
-            <input
-              type="text"
-              placeholder="Task Title"
-              className="mb-3 w-full rounded-lg border p-3 text-gray-900 placeholder:text-gray-400"
-            />
-
-            <textarea
-              placeholder="Task Description"
-              className="mb-3 w-full rounded-lg border p-3 text-gray-900 placeholder:text-gray-400"
-              rows={3}
-            />
-
-            <button className="rounded-lg bg-[#4F46E5] px-4 py-2 text-white">
-              Save Task
-            </button>
-          </div>
-        )}
 
         {/* Task Card */}
         <div className="space-y-4">
@@ -143,7 +118,7 @@ export default function Home() {
                   Complete
                 </button>
 
-                <button className="rounded-lg border px-3 py-2 text-sm">
+                <button className="rounded-lg border px-3 py-2 text-sm text-gray-700">
                   Edit
                 </button>
 
