@@ -29,8 +29,12 @@ export default function SettingsPage() {
                   : 'border-gray-200 dark:border-gray-700'
               }`}
             >
-              <span className="font-medium text-gray-900 dark:text-white">Light Mode</span>
-              <p className="text-sm text-gray-500 mt-1">Bright and clean interface</p>
+              <span className="font-medium text-gray-900 dark:text-white">
+                Light Mode
+              </span>
+              <p className="text-sm text-gray-500 mt-1">
+                Bright and clean interface
+              </p>
             </button>
 
             <button
@@ -41,7 +45,9 @@ export default function SettingsPage() {
                   : 'border-gray-200 dark:border-gray-700'
               }`}
             >
-              <span className="font-medium text-gray-900 dark:text-white">Dark Mode</span>
+              <span className="font-medium text-gray-900 dark:text-white">
+                Dark Mode
+              </span>
               <p className="text-sm text-gray-500 mt-1">Easy on the eyes</p>
             </button>
           </div>
