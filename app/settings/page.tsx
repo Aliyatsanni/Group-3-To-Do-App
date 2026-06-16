@@ -1,9 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function SettingsPage() {
+  const router = useRouter();
   const [theme, setTheme] = useState('light');
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    router.push('/login');
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-gray-950 p-4 sm:p-8">
@@ -61,6 +68,19 @@ export default function SettingsPage() {
           <p className="text-gray-600 dark:text-gray-400">
             More options coming soon...
           </p>
+        </div>
+
+        {/* Logout Section */}
+        <div className="bg-white dark:bg-gray-900 rounded-[12px] p-6 shadow-sm border border-gray-200 dark:border-gray-800">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Account
+          </h2>
+          <button
+            onClick={handleLogout}
+            className="w-full rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-100"
+          >
+            Sign Out
+          </button>
         </div>
       </div>
     </div>
