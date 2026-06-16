@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 export default function LoginHeader() {
   return (
     <header className="border-b bg-white shadow-sm">
