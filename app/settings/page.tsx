@@ -84,6 +84,27 @@ export default function SettingsPage() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] p-4 sm:p-8">
       <div className="max-w-3xl mx-auto">
+        <div className="mb-6">
+          <button
+            onClick={() => router.push('/dashboard')}
+            className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Back to Dashboard
+          </button>
+        </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
         <p className="text-gray-500 mb-8">Manage your app preferences</p>
 
