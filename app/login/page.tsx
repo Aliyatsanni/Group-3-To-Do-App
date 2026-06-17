@@ -39,7 +39,7 @@ export default function LoginPage() {
             <p className="text-gray-500">Sign in to access your task manager</p>
           </div>
 
-          <div className="rounded-xl bg-white p-8 shadow-sm">
+          <div className="rounded-xl bg-white p-8 shadow-sm border border-gray-200">
             <div className="mb-6 rounded-lg bg-purple-50 p-4 text-center">
               <p className="text-sm text-purple-700">
                 <span className="font-semibold">Demo Mode:</span> Use any email
@@ -62,7 +62,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="Enter your email"
-                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]"
+                  className="w-full rounded-xl border border-gray-300 bg-white text-gray-900 px-4 py-3 outline-none transition focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]"
                 />
               </div>
 
@@ -80,7 +80,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Enter your password"
-                  className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none transition focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]"
+                  className="w-full rounded-xl border border-gray-300 bg-white text-gray-900 px-4 py-3 outline-none transition focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]"
                 />
               </div>
 

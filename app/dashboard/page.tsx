@@ -69,6 +69,55 @@ export default function Home() {
       dueDate: 'June 21',
       status: 'Active',
     },
+    {
+      id: 9,
+      title: 'Update portfolio website',
+      description: 'Add recent projects and update skills section.',
+      dueDate: 'June 23',
+      status: 'Active',
+    },
+    {
+      id: 10,
+      title: 'Prepare presentation slides',
+      description: 'Create slides for the upcoming team meeting.',
+      dueDate: 'June 24',
+      status: 'Active',
+    },
+    {
+      id: 11,
+      title: 'Call mom',
+      description: 'Catch up with family over the phone.',
+      dueDate: 'June 26',
+      status: 'Completed',
+    },
+    {
+      id: 12,
+      title: 'Water plants',
+      description: 'Water all indoor plants and check for any issues.',
+      dueDate: 'June 27',
+      status: 'Active',
+    },
+    {
+      id: 13,
+      title: 'Backup computer files',
+      description: 'Create backup of important documents and photos.',
+      dueDate: 'June 28',
+      status: 'Active',
+    },
+    {
+      id: 14,
+      title: 'Schedule dentist appointment',
+      description: 'Book a routine checkup with the dentist.',
+      dueDate: 'June 29',
+      status: 'Active',
+    },
+    {
+      id: 15,
+      title: 'Learn new programming language',
+      description: 'Start learning Rust programming language basics.',
+      dueDate: 'June 30',
+      status: 'Active',
+    },
   ]);
   const [editingTask, setEditingTask] = useState<number | null>(null);
   const [editFormData, setEditFormData] = useState({
@@ -82,6 +131,13 @@ export default function Home() {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [filter, setFilter] = useState<'all' | 'active' | 'completed'>('all');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [addFormData, setAddFormData] = useState({
+    title: '',
+    description: '',
+    dueDate: '',
+  });
 
   const totalTasks = tasks.length;
 
@@ -91,11 +147,18 @@ export default function Home() {
     (task) => task.status === 'Completed'
   ).length;
 
-  const filteredTasks = tasks.filter(
-    (task) =>
+  const filteredTasks = tasks.filter((task) => {
+    const matchesSearch =
       task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+      task.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const matchesFilter =
+      filter === 'all' ||
+      (filter === 'active' && task.status === 'Active') ||
+      (filter === 'completed' && task.status === 'Completed');
+
+    return matchesSearch && matchesFilter;
+  });
 
   const handleEdit = (task: Task) => {
     setEditingTask(task.id);
@@ -147,25 +210,47 @@ export default function Home() {
     setTimeout(() => setShowSuccessPopup(false), 3000);
   };
 
+  const handleAddTask = () => {
+    if (!addFormData.title.trim()) {
+      alert('Please enter a task title');
+      return;
+    }
+
+    const newTask: Task = {
+      id: tasks.length + 1,
+      title: addFormData.title,
+      description: addFormData.description,
+      dueDate: addFormData.dueDate || 'No due date',
+      status: 'Active',
+    };
+
+    setTasks([newTask, ...tasks]);
+    setAddFormData({ title: '', description: '', dueDate: '' });
+    setShowAddModal(false);
+    setSuccessMessage('Task added successfully!');
+    setShowSuccessPopup(true);
+    setTimeout(() => setShowSuccessPopup(false), 3000);
+  };
+
   return (
     <PageLayout>
       <div className="mx-auto max-w-5xl">
         <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="rounded-xl bg-white p-4 shadow-sm border border-gray-200">
             <p className="text-sm text-gray-500">Total Tasks</p>
             <h2 className="mt-2 text-2xl font-bold text-gray-600">
               {totalTasks}
             </h2>
           </div>
 
-          <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="rounded-xl bg-white p-4 shadow-sm border border-gray-200">
             <p className="text-sm text-gray-500">Active</p>
             <h2 className="mt-2 text-2xl font-bold text-[#4F46E5]">
               {activeTasks}
             </h2>
           </div>
 
-          <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="rounded-xl bg-white p-4 shadow-sm border border-gray-200">
             <p className="text-sm text-gray-500">Completed</p>
             <h2 className="mt-2 text-2xl font-bold text-[#4F46E5]">
               {completedTasks}
@@ -180,22 +265,50 @@ export default function Home() {
             placeholder="Search tasks..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-xl border bg-white p-3 outline-none text-purple-600 focus:ring-2 focus:ring-purple-500"
+            className="w-full rounded-xl border border-gray-300 bg-white p-3 outline-none text-gray-900 focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
         {/* Filter Buttons */}
         <div className="mb-6 flex gap-3">
-          <button className="rounded-xl bg-[#4F46E5] px-4 py-2 text-white">
+          <button
+            onClick={() => setFilter('all')}
+            className={`rounded-xl px-4 py-2 ${
+              filter === 'all'
+                ? 'bg-[#4F46E5] text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-50'
+            }`}
+          >
             All
           </button>
 
-          <button className="rounded-xl bg-white px-4 py-2 text-gray-600">
+          <button
+            onClick={() => setFilter('active')}
+            className={`rounded-xl px-4 py-2 ${
+              filter === 'active'
+                ? 'bg-[#4F46E5] text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-50'
+            }`}
+          >
             Active
           </button>
 
-          <button className="rounded-xl bg-white px-4 py-2 text-gray-600">
+          <button
+            onClick={() => setFilter('completed')}
+            className={`rounded-xl px-4 py-2 ${
+              filter === 'completed'
+                ? 'bg-[#4F46E5] text-white'
+                : 'bg-white text-gray-600 hover:bg-gray-50'
+            }`}
+          >
             Completed
+          </button>
+
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="rounded-xl bg-[#4F46E5] px-4 py-2 text-white hover:bg-[#4338ca] transition-colors"
+          >
+            + Add Task
           </button>
         </div>
 
@@ -203,7 +316,10 @@ export default function Home() {
         <div className="space-y-4">
           {filteredTasks.length > 0 ? (
             filteredTasks.map((task) => (
-              <div key={task.id} className="rounded-xl bg-white p-5 shadow-sm">
+              <div
+                key={task.id}
+                className="rounded-xl bg-white p-5 shadow-sm border border-gray-200"
+              >
                 <div className="flex items-start justify-between">
                   <div>
                     <h2 className="mb-2 text-lg font-semibold text-gray-900">
@@ -258,18 +374,81 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <div className="rounded-xl bg-white p-8 text-center shadow-sm">
+            <div className="rounded-xl bg-white p-8 text-center shadow-sm border border-gray-200">
               <p className="text-gray-500">
-                No tasks found matching your search.
+                {searchQuery
+                  ? 'No tasks found matching your search.'
+                  : filter === 'active'
+                    ? 'No active tasks.'
+                    : filter === 'completed'
+                      ? 'No completed tasks.'
+                      : 'No tasks found.'}
               </p>
             </div>
           )}
         </div>
 
+        {/* Add Task Modal */}
+        {showAddModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl border border-gray-200">
+              <h2 className="mb-4 text-xl font-semibold text-gray-900">
+                Add New Task
+              </h2>
+              <div className="space-y-3">
+                <input
+                  type="text"
+                  placeholder="Task title..."
+                  value={addFormData.title}
+                  onChange={(e) =>
+                    setAddFormData({ ...addFormData, title: e.target.value })
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Description (optional)"
+                  value={addFormData.description}
+                  onChange={(e) =>
+                    setAddFormData({
+                      ...addFormData,
+                      description: e.target.value,
+                    })
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Due Date (optional)"
+                  value={addFormData.dueDate}
+                  onChange={(e) =>
+                    setAddFormData({ ...addFormData, dueDate: e.target.value })
+                  }
+                  className="w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
+                />
+              </div>
+              <div className="mt-4 flex gap-3">
+                <button
+                  onClick={handleAddTask}
+                  className="flex-1 rounded-lg bg-[#4F46E5] px-4 py-2 text-white hover:bg-[#4338ca] transition-colors"
+                >
+                  Add Task
+                </button>
+                <button
+                  onClick={() => setShowAddModal(false)}
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Edit Modal */}
         {showEditModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl border border-gray-200">
               <h2 className="mb-4 text-xl font-semibold text-gray-900">
                 Edit Task
               </h2>
@@ -280,7 +459,7 @@ export default function Home() {
                 onChange={(e) =>
                   setEditFormData({ ...editFormData, title: e.target.value })
                 }
-                className="mb-3 w-full rounded-lg border p-3 text-gray-900 placeholder:text-gray-400"
+                className="mb-3 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
               />
               <textarea
                 placeholder="Task Description"
@@ -291,7 +470,7 @@ export default function Home() {
                     description: e.target.value,
                   })
                 }
-                className="mb-3 w-full rounded-lg border p-3 text-gray-900 placeholder:text-gray-400"
+                className="mb-3 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
                 rows={3}
               />
               <input
@@ -301,7 +480,7 @@ export default function Home() {
                 onChange={(e) =>
                   setEditFormData({ ...editFormData, dueDate: e.target.value })
                 }
-                className="mb-4 w-full rounded-lg border p-3 text-gray-900 placeholder:text-gray-400"
+                className="mb-4 w-full rounded-lg border border-gray-300 bg-white p-3 text-gray-900 placeholder:text-gray-400"
               />
               <div className="flex gap-3">
                 <button
@@ -312,7 +491,7 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => setShowEditModal(false)}
-                  className="flex-1 rounded-lg border px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                 >
                   Cancel
                 </button>
@@ -324,7 +503,7 @@ export default function Home() {
         {/* Delete Confirmation Modal */}
         {showDeleteModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+            <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl border border-gray-200">
               <h2 className="mb-2 text-xl font-semibold text-gray-900">
                 Delete Task
               </h2>
@@ -344,7 +523,7 @@ export default function Home() {
                     setShowDeleteModal(false);
                     setTaskToDelete(null);
                   }}
-                  className="flex-1 rounded-lg border px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
                 >
                   Cancel
                 </button>
