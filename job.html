@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Section</title>
+    <link rel="stylesheet" href="job.css" />
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="section-title">Search Bar</h1>
+
+      <div class="controls-card">
+        <!-- SEARCH -->
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Search tasks..." />
+        </div>
+
+        <!-- FILTER + SORT -->
+        <div class="action-row">
+          <!-- FILTERS -->
+          <div class="filter-group" id="filterGroup">
+            <button class="filter-btn active" data-filter="all">All</button>
+
+            <button class="filter-btn" data-filter="completed">
+              Completed
+            </button>
+
+            <button class="filter-btn" data-filter="pending">Pending</button>
+          </div>
+
+          <!-- SORT -->
+          <div class="sort-wrapper">
+            <select class="sort-select" id="sortSelect">
+              <option value="az">Sort: A - Z</option>
+              <option value="za">Sort: Z - A</option>
+              <option value="completed">Completed First</option>
+              <option value="pending">Pending First</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK LIST -->
+      <div class="task-list" id="taskList"></div>
+    </div>
+
+    <script src="job.js"></script>
+  </body>
+</html>
